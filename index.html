@@ -3,110 +3,513 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1">
 
-<title>Anagrafica Persone</title>
+    <title>Anagrafica Enterprise V3</title>
 
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#0078D4">
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Excel Export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <!-- PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
 
 <body>
 
-<div class="card">
+    <div class="container">
 
-<h1>Anagrafica Persone</h1>
+        <!-- ================================================== -->
+        <!-- HEADER -->
+        <!-- ================================================== -->
 
-<button id="toggleTheme">
-🌙 Tema
-</button>
+        <header class="header-card">
 
-</div>
+            <div class="header-top">
 
-<div class="card">
+                <div>
 
-<h2>Statistiche</h2>
+                    <h1>
+                        👥 Anagrafica Enterprise
+                    </h1>
 
-<div id="stats"></div>
+                    <p class="subtitle">
+                        Gestione Persone, Aziende e Contatti
+                    </p>
 
-</div>
+                </div>
 
-<div class="card">
+                <button
+                    id="toggleTheme"
+                    class="btn btn-secondary">
 
-<h2>Ricerca avanzata</h2>
+                    🌙 Dark Mode
 
-<input id="searchNome" placeholder="Nome">
-<input id="searchCognome" placeholder="Cognome">
-<input id="searchAzienda" placeholder="Azienda">
+                </button>
 
-</div>
+            </div>
 
-<div class="card">
+        </header>
 
-<form id="personForm">
+        <!-- ================================================== -->
+        <!-- TOOLBAR -->
+        <!-- ================================================== -->
 
-<input id="nome" placeholder="Nome" required>
-<input id="cognome" placeholder="Cognome" required>
+        <section class="toolbar-card">
 
-<input type="date" id="dataNascita">
+            <button id="newBtn"
+                class="btn btn-primary">
 
-<input id="email">
+                ➕ Nuovo
 
-<input id="telefono">
+            </button>
 
-<input id="azienda">
+            <button id="saveBtn"
+                class="btn btn-success">
 
-<input id="indirizzo">
+                💾 Salva
 
-<input id="citta">
+            </button>
 
-<input id="codiceFiscale">
+            <button id="excelBtn"
+                class="btn">
 
-<textarea id="note"></textarea>
+                📊 Excel
 
-<input type="file" id="foto">
+            </button>
 
-<button type="submit">
-Salva
-</button>
+            <button id="pdfBtn"
+                class="btn">
 
-</form>
+                📄 PDF
 
-</div>
+            </button>
 
-<div class="card">
+            <button id="backupBtn"
+                class="btn">
 
-<table>
+                ☁ Backup
 
-<thead>
+            </button>
 
-<tr>
+            <button id="restoreBtn"
+                class="btn">
 
-<th onclick="sortTable('nome')">Nome</th>
+                📂 Ripristina
 
-<th onclick="sortTable('cognome')">Cognome</th>
+            </button>
 
-<th onclick="sortTable('azienda')">Azienda</th>
+            <input
+                type="file"
+                id="restoreFile"
+                hidden
+                accept=".json">
 
-<th>Email</th>
+        </section>
 
-<th>Azioni</th>
+        <!-- ================================================== -->
+        <!-- DASHBOARD -->
+        <!-- ================================================== -->
 
-</tr>
+        <section class="dashboard-grid">
 
-</thead>
+            <div class="kpi-card">
 
-<tbody id="tableBody">
+                <div class="kpi-value"
+                    id="totalPeople">
 
-</tbody>
+                    0
 
-</table>
+                </div>
 
-</div>
+                <div class="kpi-label">
 
-<script src="app.js"></script>
+                    Persone
+
+                </div>
+
+            </div>
+
+            <div class="kpi-card">
+
+                <div class="kpi-value"
+                    id="totalCompanies">
+
+                    0
+
+                </div>
+
+                <div class="kpi-label">
+
+                    Aziende
+
+                </div>
+
+            </div>
+
+            <div class="kpi-card">
+
+                <div class="kpi-value"
+                    id="totalEmails">
+
+                    0
+
+                </div>
+
+                <div class="kpi-label">
+
+                    Email
+
+                </div>
+
+            </div>
+
+            <div class="kpi-card">
+
+                <div class="kpi-value"
+                    id="totalPhones">
+
+                    0
+
+                </div>
+
+                <div class="kpi-label">
+
+                    Telefoni
+
+                </div>
+
+            </div>
+
+            <div class="kpi-card">
+
+                <div class="kpi-value"
+                    id="totalPhotos">
+
+                    0
+
+                </div>
+
+                <div class="kpi-label">
+
+                    Foto
+
+                </div>
+
+            </div>
+
+            <div class="kpi-card">
+
+                <div class="kpi-value"
+                    id="averageAge">
+
+                    -
+
+                </div>
+
+                <div class="kpi-label">
+
+                    Età Media
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SEARCH -->
+        <!-- ================================================== -->
+
+        <section class="card">
+
+            <h2>
+                🔍 Ricerca Avanzata
+            </h2>
+
+            <div class="search-grid">
+
+                <input
+                    type="text"
+                    id="searchNome"
+                    placeholder="Nome">
+
+                <input
+                    type="text"
+                    id="searchCognome"
+                    placeholder="Cognome">
+
+                <input
+                    type="text"
+                    id="searchAzienda"
+                    placeholder="Azienda">
+
+                <input
+                    type="text"
+                    id="searchCitta"
+                    placeholder="Città">
+
+                <input
+                    type="text"
+                    id="searchEmail"
+                    placeholder="Email">
+
+                <select id="searchFoto">
+
+                    <option value="">
+                        Tutte
+                    </option>
+
+                    <option value="yes">
+                        Con Foto
+                    </option>
+
+                    <option value="no">
+                        Senza Foto
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+        <!-- ================================================== -->
+        <!-- FORM -->
+        <!-- ================================================== -->
+
+        <section class="card">
+
+            <h2>
+                📝 Scheda Persona
+            </h2>
+
+            <input
+                type="hidden"
+                id="recordId">
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>Nome *</label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        required>
+
+                </div>
+
+                <div>
+
+                    <label>Cognome *</label>
+
+                    <input
+                        type="text"
+                        id="cognome"
+                        required>
+
+                </div>
+
+                <div>
+
+                    <label>Data Nascita</label>
+
+                    <input
+                        type="date"
+                        id="dataNascita">
+
+                </div>
+
+                <div>
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        id="email">
+
+                </div>
+
+                <div>
+
+                    <label>Telefono</label>
+
+                    <input
+                        type="text"
+                        id="telefono">
+
+                </div>
+
+                <div>
+
+                    <label>Codice Fiscale</label>
+
+                    <input
+                        type="text"
+                        id="codiceFiscale">
+
+                </div>
+
+                <div>
+
+                    <label>Azienda</label>
+
+                    <input
+                        type="text"
+                        id="azienda">
+
+                </div>
+
+                <div>
+
+                    <label>Città</label>
+
+                    <input
+                        type="text"
+                        id="citta">
+
+                </div>
+
+                <div class="full-width">
+
+                    <label>Indirizzo</label>
+
+                    <input
+                        type="text"
+                        id="indirizzo">
+
+                </div>
+
+                <div class="full-width">
+
+                    <label>Note</label>
+
+                    <textarea
+                        id="note"
+                        rows="5"></textarea>
+
+                </div>
+
+            </div>
+
+            <!-- FOTO -->
+
+            <div class="photo-section">
+
+                <h3>
+                    📷 Foto Profilo
+                </h3>
+
+                <input
+                    type="file"
+                    id="foto"
+                    accept="image/*">
+
+                <div
+                    id="photoPreview"
+                    class="preview-box">
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================================================== -->
+        <!-- TABLE -->
+        <!-- ================================================== -->
+
+        <section class="card">
+
+            <div class="table-header">
+
+                <h2>
+                    📋 Elenco Persone
+                </h2>
+
+                <span
+                    id="recordCount">
+
+                    0 Record
+
+                </span>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Foto</th>
+
+                            <th data-sort="nome">
+                                Nome
+                            </th>
+
+                            <th data-sort="cognome">
+                                Cognome
+                            </th>
+
+                            <th data-sort="azienda">
+                                Azienda
+                            </th>
+
+                            <th data-sort="citta">
+                                Città
+                            </th>
+
+                            <th data-sort="email">
+                                Email
+                            </th>
+
+                            <th data-sort="telefono">
+                                Telefono
+                            </th>
+
+                            <th>
+                                Azioni
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="peopleTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- ================================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ================================================== -->
+
+    <script src="utils.js"></script>
+
+    <script src="backup.js"></script>
+
+    <script src="export.js"></script>
+
+    <script src="app.js"></script>
 
 </body>
 
