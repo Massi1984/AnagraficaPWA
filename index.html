@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Anagrafica Persone</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Anagrafica Persone</h1>
+
+<button id="toggleTheme">
+🌙 Tema
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Statistiche</h2>
+
+<div id="stats"></div>
+
+</div>
+
+<div class="card">
+
+<h2>Ricerca avanzata</h2>
+
+<input id="searchNome" placeholder="Nome">
+<input id="searchCognome" placeholder="Cognome">
+<input id="searchAzienda" placeholder="Azienda">
+
+</div>
+
+<div class="card">
+
+<form id="personForm">
+
+<input id="nome" placeholder="Nome" required>
+<input id="cognome" placeholder="Cognome" required>
+
+<input type="date" id="dataNascita">
+
+<input id="email">
+
+<input id="telefono">
+
+<input id="azienda">
+
+<input id="indirizzo">
+
+<input id="citta">
+
+<input id="codiceFiscale">
+
+<textarea id="note"></textarea>
+
+<input type="file" id="foto">
+
+<button type="submit">
+Salva
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th onclick="sortTable('nome')">Nome</th>
+
+<th onclick="sortTable('cognome')">Cognome</th>
+
+<th onclick="sortTable('azienda')">Azienda</th>
+
+<th>Email</th>
+
+<th>Azioni</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
